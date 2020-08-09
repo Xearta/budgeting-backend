@@ -1,5 +1,5 @@
 class Api::V1::TransactionsController < ApplicationController
-  before_action :set_account
+  before_action :set_account, except: [:destroy]
 
   # api/v1/accounts/1/transactions
   def index
@@ -10,7 +10,7 @@ class Api::V1::TransactionsController < ApplicationController
     @transaction = @account.transactions.new(transaction_params)
     if @account.update_balance(@transaction) != 'Balance too low.'
       @transaction.save
-      render json: @transaction
+      render json: @account
     else
       render json: {error: 'Balance too low for transaction'}
     end
@@ -22,9 +22,19 @@ class Api::V1::TransactionsController < ApplicationController
   end
 
   def destroy
-    # Reverse the transaction
-    # Remove the transaction
+    # Find transaction and account
+    @transaction = Transaction.find(params['id'])
+    @account = Account.find(@transaction.account_id)
+    # Check if you can reverse the transaction
+    if @account.update_balance_on_delete(@transaction)
+      # Remove the transaction
+      @transaction.destroy
+      render json: @account
+    else
+      render json: {error: 'Balance too low to reverse this transaction.'}
+    end
   end
+
 
 
   def set_account

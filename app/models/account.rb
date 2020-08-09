@@ -4,10 +4,10 @@ class Account < ApplicationRecord
 
 
   def update_balance(transaction)
-    if transaction.kind == 'deposit'
+    if transaction.typeOfTransaction == 'deposit'
       self.balance += transaction.amount
       self.save
-    elsif transaction.kind == 'withdraw'
+    elsif transaction.typeOfTransaction == 'withdraw'
       if self.balance >= transaction.amount
         self.balance -= transaction.amount
         self.save
@@ -16,4 +16,20 @@ class Account < ApplicationRecord
       end
     end
   end
+
+
+  def update_balance_on_delete(transaction)
+    if transaction.typeOfTransaction == 'deposit'
+      if self.balance >= transaction.amount
+        self.balance -= transaction.amount
+        self.save
+      else
+        return 'Balance too low.'
+      end
+    elsif transaction.typeOfTransaction == 'withdraw'
+      self.balance += transaction.amount
+      self.save
+    end
+  end
+
 end

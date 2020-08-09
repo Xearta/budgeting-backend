@@ -7,7 +7,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-account = Account.create(name: 'Checking', typeOfAccount: 'Income', balance: 1000)
-accountTwo = Account.create(name: 'Rent', typeOfAccount: 'Expense', balance: 250)
-transaction = Transaction.create(account_id: 1, amount: 10, typeOfTransaction: 'deposit', date: DateTime.now, description: 'Found $10')
-transaction_two = Transaction.create(account_id: 1, amount: 25, typeOfTransaction: 'withdraw', date: DateTime.now, description: 'Withdrew $25')
+Account.create(name: 'Paycheck', typeOfAccount: 'Income', planned: 2000, spent: 0, remaining: 2000, available: 0)
+Account.create(name: 'Rent', typeOfAccount: 'Expense', planned: 1000, spent: 0, remaining: 1000, available: 0)
+Account.create(name: 'Groceries', typeOfAccount: 'Expense', planned: 250, spent: 0, remaining: 250, available: 0)
+Account.create(name: 'Phone Bill', typeOfAccount: 'Expense', planned: 100, spent: 0, remaining: 100, available: 0)
+Account.create(name: 'Auto Loan', typeOfAccount: 'Expense', planned: 500, spent: 0, remaining: 500, available: 0)
+
+Transaction.create(account_id: 2, amount: 500, typeOfTransaction: 'expense', date: DateTime.now, description: 'Spent $500 towards rent')
+# transaction_two = Transaction.create(account_id: 1, amount: 25, typeOfTransaction: 'withdraw', date: DateTime.now, description: 'Withdrew $25')

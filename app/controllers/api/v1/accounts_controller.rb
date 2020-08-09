@@ -17,6 +17,13 @@ class Api::V1::AccountsController < ApplicationController
     render json: @account
   end
 
+  def update
+    @account = Account.find(params[:id])
+    @account.update(name: params["account"]["name"], planned: params["account"]["planned"])
+    @account.save
+    render json: @account
+  end
+
   def destroy
     @account = Account.find(params[:id])
     @account.destroy
@@ -25,6 +32,6 @@ class Api::V1::AccountsController < ApplicationController
 
   private
   def account_params
-    params.require(:account).permit(:name, :balance, :typeOfAccount)
+    params.require(:account).permit(:name, :planned, :spent, :remaining, :available, :typeOfAccount)
   end
 end

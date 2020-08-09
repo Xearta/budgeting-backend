@@ -3,7 +3,10 @@ class CreateAccounts < ActiveRecord::Migration[6.0]
     create_table :accounts do |t|
       t.string :name
       t.string :typeOfAccount
-      t.float :balance
+      t.float :planned
+      t.float :spent
+      t.float :remaining
+      t.float :available
 
       t.timestamps
     end

@@ -8,7 +8,9 @@ class Api::V1::TransactionsController < ApplicationController
 
   def create
     @transaction = @account.transactions.new(transaction_params)
-    if @account.update_balance(@transaction) != 'Balance too low.'
+    @transaction.date = DateTime.now
+
+    if @account.update_spent(@transaction) != 'Transaction Failed.'
       @transaction.save
       render json: @account
     else
@@ -21,19 +23,19 @@ class Api::V1::TransactionsController < ApplicationController
     render json: @transaction
   end
 
-  def destroy
-    # Find transaction and account
-    @transaction = Transaction.find(params['id'])
-    @account = Account.find(@transaction.account_id)
-    # Check if you can reverse the transaction
-    if @account.update_balance_on_delete(@transaction)
-      # Remove the transaction
-      @transaction.destroy
-      render json: @account
-    else
-      render json: {error: 'Balance too low to reverse this transaction.'}
-    end
-  end
+  # def destroy
+  #   # Find transaction and account
+  #   @transaction = Transaction.find(params['id'])
+  #   @account = Account.find(@transaction.account_id)
+  #   # Check if you can reverse the transaction
+  #   if @account.update_balance_on_delete(@transaction)
+  #     # Remove the transaction
+  #     @transaction.destroy
+  #     render json: @account
+  #   else
+  #     render json: {error: 'Balance too low to reverse this transaction.'}
+  #   end
+  # end
 
 
 

@@ -20,10 +20,11 @@ class Api::V1::AccountsController < ApplicationController
   def destroy
     @account = Account.find(params[:id])
     @account.destroy
+    render json: @account
   end
 
   private
   def account_params
-    params.require(:account).permit(:name, :balance)
+    params.require(:account).permit(:name, :balance, :typeOfAccount)
   end
 end

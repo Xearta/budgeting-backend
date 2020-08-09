@@ -7,6 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-account = Account.create(name: 'Checking', balance: 1000)
+account = Account.create(name: 'Checking', typeOfAccount: 'Income', balance: 1000)
+accountTwo = Account.create(name: 'Rent', typeOfAccount: 'Expense', balance: 250)
 transaction = Transaction.create(account_id: 1, amount: 10, typeOfTransaction: 'deposit', date: DateTime.now, description: 'Found $10')
 transaction_two = Transaction.create(account_id: 1, amount: 25, typeOfTransaction: 'withdraw', date: DateTime.now, description: 'Withdrew $25')
